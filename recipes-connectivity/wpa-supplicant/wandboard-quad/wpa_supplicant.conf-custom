@@ -1,5 +1,4 @@
 network={
 	ssid="Ingenuity-2.4-Guest1"
-	#psk="thinkcreateamaze"
 	psk=bb0b2d9931991152979a5556cb5057575823b3f918523a879182b13f67e1c8e3
 }
