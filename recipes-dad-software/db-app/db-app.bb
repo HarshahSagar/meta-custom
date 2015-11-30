@@ -24,6 +24,9 @@ do_install() {
 
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/db-app.init ${D}${sysconfdir}/init.d/db-app
+
+	install -d ${D}/home/root/data/current
+	install -d ${D}/home/root/data/completed
 }
 
 INITSCRIPT_NAME = "db-app"
@@ -33,5 +36,7 @@ INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
 FILES_${PN} += "/home/ /home/root/ /home/root/bin/ /home/root/bin/db_app"
+FILES_${PN} += "/home/ /home/root/ /home/root/data/ /home/root/data/current"
+FILES_${PN} += "/home/ /home/root/ /home/root/data/ /home/root/data/completed"
 
 RDEPENDS_${PN} = "qtbase qtwebsockets"
