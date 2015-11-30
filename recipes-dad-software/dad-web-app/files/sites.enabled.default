@@ -1,0 +1,73 @@
+upstream dm {
+  ip_hash;
+  server 127.0.0.1:1338;
+}
+
+server {
+	listen 80;
+
+  	location  / {
+    		proxy_pass http://localhost:8080/;
+	    	proxy_http_version 1.1;
+    		proxy_set_header Upgrade $http_upgrade;
+    		proxy_set_header Connection 'upgrade';
+   		proxy_set_header Host $host;
+    		proxy_cache_bypass $http_upgrade;
+  	}
+
+    	location ~ \.(json|html)$ {
+			root /usr/local/nginx/web_app;
+    	}
+
+        location /app.scripts.json {
+			alias /usr/local/nginx/web_app/app.scripts.json;
+        	access_log off;
+       		expires max;
+        }
+
+        location /plugin {
+			alias /usr/local/nginx/web_app/plugin/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /build {
+			alias /usr/local/nginx/web_app/build/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /sound {
+			alias /usr/local/nginx/web_app/sound/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /styles/img {
+			alias /usr/local/nginx/web_app/styles/img/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /styles/css {
+			alias /usr/local/nginx/web_app/styles/css/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /styles/fonts {
+			alias /usr/local/nginx/web_app/styles/fonts/;
+        	access_log off;
+       		expires max;
+        }
+
+        location /dm {
+    		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+    		proxy_http_version 1.1;
+		proxy_bind 192.168.1.10;
+    		proxy_pass http://dm;
+		proxy_read_timeout 604800;
+        }
+}
+

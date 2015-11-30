@@ -8,15 +8,26 @@ LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
 SRCREV = "master"
-SRC_URI = "git:///home/harshahs/dad_software;protocol=file;tag=master"
+SRC_URI = " \
+	git:///home/harshahs/dad_software;protocol=file;tag=master \
+	file://db-app.init \
+"
 S = "${WORKDIR}/git/db_app"
 
 require recipes-qt/qt5/qt5.inc
 
+inherit update-rc.d
+
 do_install() {
 	install -d ${D}/home/root/bin
 	install -m 0755 ${B}/db_app ${D}/home/root/bin
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${WORKDIR}/db-app.init ${D}${sysconfdir}/init.d/db-app
 }
+
+INITSCRIPT_NAME = "db-app"
+INITSCRIPT_PARAMS = "defaults 90 20"
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
