@@ -15,8 +15,7 @@ SRC_URI = " \
 	file://startnodejs.sh \
 	file://dad-web-app.init \
 "
-
-#S = "${WORKDIR}/git/conf"
+inherit update-rc.d
 
 do_install() {
 	install -d ${D}/etc/nginx/sites-enabled
